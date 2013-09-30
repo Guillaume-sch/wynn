@@ -2,32 +2,162 @@
 	<head>
 		<script src="doT.js" type="text/javascript"></script>
 		<script src="jquery-1.10.1.js" type="text/javascript"></script>
-	</head>
+		
+		<STYLE type="text/css">
+			th.value {color:rgb(90,153,211);}
+			.evolution {color:rgb(0,177,72);}
+			.fixe {color:rgb(253,192,6);}
+			tr#remises>th.value {color:rgb(248,18,24);}
+			div.CA tr>th.fixe,tr>th.evolution {color:rgb(90,153,211);}
+			div.CA>table tr>th.fixe {font-size:72;}
+			
 
-	<body><div>Hello World!</div>
+			
+			div.CA>table tr>th.evolution {font-size:36; float:right;}
+			div.indicateurs {width: 300; margin-left: 128; margin-top: 70;}
+			
+			div.indicateurs .label {font-size: 24;text-align:right;padding-right:30;}
+			div.indicateurs .value {font-size: 24;text-align:left;padding-left:30;}
+			
+			div.bottom-line {line-height:1;font-size: 14;margin-top: 80;margin-left:60;}
+			.concretisation,.ventes,.entrees {display:inline;}
+			#content-left {border-width:1px;border-style:dotted;border-color:black;float:left;width:500;height:500;}
+			#content-right {width:400; background:rgb(90,153,211);float:right;margin-right:400px;padding-left:10px;height:500;}
+			#content {border-width:1px;border-style:dotted;border-color:black;}
+			div.CA>table {width: 350;text-align: right;margin-right: auto;margin-left: auto;margin-top: 10;}
+		</STYLE>
+		
+	</head>
+	<body>
+	<p></p>
+		<script id="indicateurs" type="text/x-dot-template">
+			<div class="CA">
+				<table>
+					<tr>
+						<th class="fixe"><%=it.global.val1 %> E</th>
+					</tr>
+					<tr>
+						<th class="evolution"><%? it.ca < 0%>-<%??%>+<%?%> <%=it.global.evol%> %</th>
+					</tr>
+				</table>
+			</div>
+			<div class="indicateurs">
+				<table>
+					<tr id="accessoires"><th class="label">Accessoires</th>
+						<th class="value"><%=it.global.val2 %> %</th><tr/>
+					<tr id="services"><th class="label">Services</th>
+						<th class="value"><%=it.global.val1 %> %</th><tr/>
+					<tr id="offresactives"><th class="label">O A</th>
+						<th class="value"><% %> %</th><tr/>
+					<tr id="remises"><th class="label">Remise</th>
+						<th class="value"><% %> %</th><tr/>
+				</table>
+			</div>
+			<div class="bottom-line">
+				<div class="entrees">
+					<span class="label"> entrees </span>
+					<span class="fixe"><% %>11 000</span>(
+					
+					<span class="evolution">
+						<%?it.accessoires > 0%>+
+						<%??%>-
+						<%?%> 
+						<%=it.services*3%> %</span>)
+				</div>
+				<div class="ventes">
+					<span class="entrees" class="label"> ventes </span>
+					<span class="fixe"><% %>4 000</span>(
+					
+					<span class="evolution">
+						<%?it.services > 0 %>+
+						<%??%>-
+						<%?%> 
+						<%=it.accessoires*3%> %</span>) 
+				</div>
+				<span class="concretisation"> concretisation</span>
+				<span class="fixe"><% %>4780</span>
+			</div>
+		</script>
+		
+		<script id="load-ranking" type="text/x-dot-template">
+			<div id="informations">
+				<div id="position"><p>Le magasin est actuellement classe a la position : <%=it.services*6%></p>
+				<% %>
+					<p>Le magasin a progresse de X<% %>place<% %>(s)<% %><% %></p>
+				<% %>
+					<p>Le magasin a perdu <% %>X place<% %>(s)<% %><% %></p>
+				<!-- <% %> -->
+				</div>
+				<div id="top5">
+					<table>
+						<tr><th>X</th><th>critere 2</th><th>critere 4</th><th>critere 4</th><th>critere 5</th></tr>
+						<tr><th>mag 1 (rank)</th><th>val 1</th><th>val 2</th><th>val 4</th><th>val 4</th></tr>
+						<tr><th>mag 2 (rank)</th><th>val 2.1</th><th>val 2.2</th><th>val 2.3</th><th>val 2.4</th></tr>
+						<tr><th>mag 3 (rank)</th><th>val 3.1</th><th>val 3.2</th><th>val 3.3</th><th>val 3.4</th></tr>
+						<tr><th>mag 4 (rank)</th><th>val 4.1</th><th>val 4.2</th><th>val 4.3</th><th>val 4.4</th></tr>
+						<tr><th>mag 5 (rank)</th><th>val 5.1</th><th>val 5.2</th><th>val 5.3</th><th>val 5.4</th></tr>
+						<tr><th>mag 16 (rank)</th><th>val 13.1</th><th>val 13.2</th><th>val 13.3</th><th>val 13.4</th></tr>
+					</table
+						
+						
+						
+						
+				</div>
+			</div>
+		</script>
+		<script id="navigation-bar" type="text/x-dot-template">
+		<div><img src="../static/images/navigation/fleche-top.gif" alt="" /><span>Darty France</span></div>
+		</script>
+		<div id="content">
+		
+		<div id="content-left"><div id="content-header"></div></div>		
+		<div id="content-right"></div>
+		</div>
 	</body>
 
-	<script type="text/javascript">	
-		function getdata() {
-			console.log('chargement data');
-		}
-		$(document).ready(function() {
+	<script type="text/javascript">	 
+	$(document).ready(function() {
+		console.log('Envoi de la requete Ajax!');
+		callAjax();
+		
+		setInterval(function(){
+			callAjax();
+		}, 1000000);
+		
+		function callAjax(){
 			console.log('Envoi de la requete Ajax!');
 			$.ajax({
-				url : 'service/ca',
-				type : 'POST',
-				dataType : 'json',
-				contentType: 'application/json',
-				data : {},
-				timeout: 12000,
-				success : function(data){
-					console.log('Success' + data);
-					window.setInterval(getdata(data), 6000);
-				},
-				error : function(){
-					console.log('Fail!');
-				}
+			url : 'service/indicateurs',
+			type : 'POST',
+			dataType : 'json',
+			contentType: 'application/json',
+			data : JSON.stringify({}),
+			timeout: 4000000,
+			success : function(data){
+				getdata(data);
+			},
+			error : function(){}
 			});
-		});
+		}
+		
+	});
+	function getdata(data) {
+		console.log('Appel GetData (utilisation de la donnée)');
+		var pagefn = doT.template($('#navigation-bar').text(), undefined, def);
+		$('#content-header').html(pagefn(data));
+		console.log('Menu de navigation chargee');
+		
+		pagefn  = doT.template($('#indicateurs').text(), undefined, def);
+		$('#content-left').html(pagefn(data));
+		console.log('partie gauche chargee');
+				
+		pagefn = doT.template($('#load-ranking').text(), undefined, def);
+		$('#content-right').html(pagefn(data));	
+		console.log('partie droite chargee');
+	}
+	
+	var def = {
+	};
+	
 	</script>
-</html>
+</html>	
