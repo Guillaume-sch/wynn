@@ -34,19 +34,19 @@
 			<div class="CA">
 				<table>
 					<tr>
-						<th class="fixe"><%=it.global.val1 %> E</th>
+						<th class="fixe"><% %> E</th>
 					</tr>
 					<tr>
-						<th class="evolution"><%? it.ca < 0%>-<%??%>+<%?%> <%=it.global.evol%> %</th>
+						<th class="evolution"> %</th>
 					</tr>
 				</table>
 			</div>
 			<div class="indicateurs">
 				<table>
 					<tr id="accessoires"><th class="label">Accessoires</th>
-						<th class="value"><%=it.global.val2 %> %</th><tr/>
+						<th class="value"><% %> %</th><tr/>
 					<tr id="services"><th class="label">Services</th>
-						<th class="value"><%=it.global.val1 %> %</th><tr/>
+						<th class="value"><% %> %</th><tr/>
 					<tr id="offresactives"><th class="label">O A</th>
 						<th class="value"><% %> %</th><tr/>
 					<tr id="remises"><th class="label">Remise</th>
@@ -59,20 +59,14 @@
 					<span class="fixe"><% %>11 000</span>(
 					
 					<span class="evolution">
-						<%?it.accessoires > 0%>+
-						<%??%>-
-						<%?%> 
-						<%=it.services*3%> %</span>)
+					%</span>)
 				</div>
 				<div class="ventes">
 					<span class="entrees" class="label"> ventes </span>
 					<span class="fixe"><% %>4 000</span>(
 					
 					<span class="evolution">
-						<%?it.services > 0 %>+
-						<%??%>-
-						<%?%> 
-						<%=it.accessoires*3%> %</span>) 
+						 %</span>) 
 				</div>
 				<span class="concretisation"> concretisation</span>
 				<span class="fixe"><% %>4780</span>
@@ -81,7 +75,7 @@
 		
 		<script id="load-ranking" type="text/x-dot-template">
 			<div id="informations">
-				<div id="position"><p>Le magasin est actuellement classe a la position : <%=it.services*6%></p>
+				<div id="position"><p>Le magasin est actuellement classe a la position : <% %></p>
 				<% %>
 					<p>Le magasin a progresse de X<% %>place<% %>(s)<% %><% %></p>
 				<% %>
@@ -106,7 +100,7 @@
 			</div>
 		</script>
 		<script id="navigation-bar" type="text/x-dot-template">
-		<div><img src="../static/images/navigation/fleche-top.gif" alt="" /><span>Darty France</span></div>
+		<div><span>Darty France</span></div>
 		</script>
 		<div id="content">
 		
@@ -154,6 +148,7 @@
 		pagefn = doT.template($('#load-ranking').text(), undefined, def);
 		$('#content-right').html(pagefn(data));	
 		console.log('partie droite chargee');
+		
 	}
 	
 	var def = {
